@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@plugin "daisyui";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@plugin "daisyui";
+
+.flex-1 {
+    scrollbar-width: none; /* Firefox */
+}
+
+.flex-1::-webkit-scrollbar {
+    display: none; /* Chrome, Edge, Safari */
+}
+
+div::-webkit-scrollbar {
+    display: none;
+}
+
+

@@ -6,7 +6,7 @@ function Users() {
   const [allUsers, loading] = useGetAllUsers();
   console.log(allUsers);
   return (
-    <div className="flex flex-col justify-center w-full items-center">
+    <div className="flex flex-col justify-center w-full items-center ">
       <h1 className="px-5 py-2 w-full text-white font-semibold bg-slate-800 rounded-md">
         Messages
       </h1>

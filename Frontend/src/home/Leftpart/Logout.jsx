@@ -3,6 +3,7 @@ import { FaSearch } from "react-icons/fa";
 import { BiLogOutCircle } from "react-icons/bi";
 import axios from "axios";
 import Cookies from "js-cookie";
+import toast from "react-hot-toast";
 function Logout() {
   const [loading, setLoading] = useState(false);
   const handleLogout = async () => {
@@ -12,10 +13,11 @@ function Logout() {
       localStorage.removeItem("ChatApp");
       Cookies.remove("jwt");
       setLoading(false);
-      alert("Logged out successfully");
+      toast.success("Logged out successfully");
       window.location.reload();
     } catch (error) {
       console.log("Error in Logout", error);
+      toast.error("Error in Logout");
     }
   };
   return (

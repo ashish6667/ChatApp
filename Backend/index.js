@@ -28,6 +28,9 @@ try {
 //routes
 app.use("/api/user", userRoute);
 app.use("/api/message", messageRoute);
+app.use("/", (req,res)=>{
+  res.send("Welcome to the server")
+});
 
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

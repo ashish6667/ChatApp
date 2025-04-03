@@ -5,11 +5,13 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
 function Logout() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const [loading, setLoading] = useState(false);
   const handleLogout = async () => {
     setLoading(true);
     try {
-      const res = await axios.post("/api/user/logout");
+      const res = await axios.post(API_BASE_URL+"/user/logout");
       localStorage.removeItem("ChatApp");
       Cookies.remove("jwt");
       setLoading(false);

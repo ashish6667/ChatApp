@@ -16,7 +16,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "https://chat-app-frontend-mu-teal.vercel.app", // Frontend URL
+    origin: "https://chat-app-frontend-mu-teal.vercel.app/", // Frontend URL
     methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
     credentials: true, // Allow cookies and credentials
   })

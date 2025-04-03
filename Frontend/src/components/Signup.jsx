@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const Signup = () => {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const [authUser, setAuthUser] = useAuth();
   const {
     register,
@@ -31,7 +33,7 @@ const Signup = () => {
     };
     //console.log(userInfo);
     await axios
-      .post("/api/user/signup", userInfo)
+      .post(API_BASE_URL+"/user/signup", userInfo)
       .then((response) => {
         if (response.data) {
           toast.success("Signup successful");

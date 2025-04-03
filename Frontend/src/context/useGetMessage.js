@@ -4,6 +4,8 @@ import axios from "axios";
 const useGetMessage = () => {
   const [loading, setLoading] = useState(false);
   const { messages, setMessage, selectedConversation } = useConversation();
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
   useEffect(() => {
     const getMessages = async () => {
@@ -11,7 +13,7 @@ const useGetMessage = () => {
       if (selectedConversation && selectedConversation._id) {
         try {
           const res = await axios.get(
-            `/api/message/get/${selectedConversation._id}`
+            API_BASE_URL+`/message/get/${selectedConversation._id}`
           );
           setMessage(res.data);
           setLoading(false);

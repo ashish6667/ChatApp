@@ -20,7 +20,7 @@ function Login()  {
     };
     //console.log(userInfo);
     axios
-      .post("/api/user/login", userInfo)
+      .post(API_BASE_URL+"/user/login", userInfo)
       .then((response) => {
         console.log(response.data);
         if (response.data) {

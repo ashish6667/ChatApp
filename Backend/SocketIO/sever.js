@@ -1,44 +1,57 @@
-import { Server } from "socket.io";
-import http from "http";
 import express from "express";
+import cors from "cors";
+import http from "http";
+import { Server } from "socket.io";
 
 const app = express();
 
+// Enable CORS for Express
+app.use(cors({
+  origin: "*", // Allow all origins
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+}));
+
 const server = http.createServer(app);
 
+// Enable CORS for Socket.IO
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3001",
-
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
 
-// realtime message code goes here
-export const getReceiverSocketId=(receiverId)=>{
-  return users[receiverId];
-}
-
+// Store online users
 const users = {};
 
-// used to listen events on server side.
+// Function to get receiver's socket ID
+export const getReceiverSocketId = (receiverId) => {
+  return users[receiverId];
+};
+
+// Listen for socket connections
 io.on("connection", (socket) => {
-  console.log("a user connected", socket.id);
+  console.log("A user connected:", socket.id);
+
   const userId = socket.handshake.query.userId;
   if (userId) {
     users[userId] = socket.id;
-    console.log("Hello", users);
+    console.log("Online Users:", users);
   }
 
-  // used to send message to all connected clients.
+  // Send updated online users list to all clients
   io.emit("getOnlineUsers", Object.keys(users));
 
-  // used to listen client side events emitted by server side (sever & client)
+  // Handle user disconnection
   socket.on("disconnect", () => {
-    console.log("a user disconnected", socket.id);
-    delete users[userId];
+    console.log("A user disconnected:", socket.id);
+    if (userId) {
+      delete users[userId];
+    }
     io.emit("getOnlineUsers", Object.keys(users));
   });
 });
 
+// Export Express and Socket.IO
 export { app, io, server };

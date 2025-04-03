@@ -14,7 +14,13 @@ dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://chat-app-frontend-mu-teal.vercel.app", // Frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
+    credentials: true, // Allow cookies and credentials
+  })
+);
 
 const PORT = process.env.PORT || 3001;
 const URI = process.env.MONGODB_URI;

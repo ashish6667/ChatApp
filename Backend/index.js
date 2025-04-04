@@ -37,6 +37,13 @@ app.options("*", (req, res) => {
   res.sendStatus(200);
 });
 
+// Debugging middleware
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  console.log("Headers:", req.headers);
+  next();
+});
+
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
@@ -56,6 +63,38 @@ app.use("/api/message", messageRoute);
 app.use("/", (req, res) => {
   res.send("Welcome to the server");
 });
+
+const router = express.Router();
+
+router.post("/signup", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    // Add your signup logic here
+    res.status(201).json({ message: "User signed up successfully" });
+  } catch (error) {
+    console.error("Error in signup route:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.use("/api/auth", router);
+
+const API_BASE_URL = "https://chat-app-backend-lake-ten.vercel.app";
+
+fetch(`${API_BASE_URL}/api/user/signup`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    username: "test",
+    password: "1234",
+  }),
+  credentials: "include", // Include cookies in the request
+})
+  .then((response) => response.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.error("Error:", error));
 
 // Start the server
 server.listen(PORT, () => {

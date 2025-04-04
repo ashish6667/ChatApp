@@ -1,10 +1,22 @@
 import express from "express";
-import { allUsers, login, logout, signup } from "../controller/user.controller.js";
-import secureRoute from "../middleware/secureRoute.js";
 const router = express.Router();
-router.post("/signup", signup);
-router.post("/login", login);
-router.post("/logout",logout);
-router.get("/allusers",secureRoute, allUsers);
+
+// Debugging middleware
+router.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  console.log("Headers:", req.headers);
+  next();
+});
+
+router.post("/signup", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    // Add your signup logic here
+    res.status(201).json({ message: "User signed up successfully" });
+  } catch (error) {
+    console.error("Error in signup route:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 export default router;

@@ -10,14 +10,6 @@ import { app, server } from "./SocketIO/sever.js";
 
 dotenv.config();
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://chat-app-frontend-mu-teal.vercel.app");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
-
 // Enable CORS
 app.use(
   cors({
@@ -29,13 +21,7 @@ app.use(
 );
 
 // Handle Preflight Requests
-app.options("*", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "https://chat-app-frontend-mu-teal.vercel.app");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.sendStatus(200);
-});
+app.options("*", cors());
 
 // Debugging middleware
 app.use((req, res, next) => {
@@ -58,7 +44,7 @@ mongoose
   .catch((error) => console.log("MongoDB connection error:", error));
 
 // Routes
-app.use("/api/user", userRoute);
+app.use("/api/user", userRoute); // Ensure this is correct
 app.use("/api/message", messageRoute);
 app.use("/", (req, res) => {
   res.send("Welcome to the server");

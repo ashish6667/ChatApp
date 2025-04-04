@@ -11,7 +11,7 @@ import { app, server } from "./SocketIO/sever.js";
 dotenv.config();
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "https://chat-app-frontend-mu-teal.vercel.app");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.header("Access-Control-Allow-Credentials", "true");
@@ -21,14 +21,21 @@ app.use((req, res, next) => {
 // Enable CORS
 app.use(
   cors({
-    origin: "*", // Frontend URL
+    origin: "https://chat-app-frontend-mu-teal.vercel.app", // Frontend URL
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allowed HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Explicitly allow headers
     credentials: true, // Allow cookies and credentials
   })
 );
 
 // Handle Preflight Requests
-app.options("*", cors());
+app.options("*", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "https://chat-app-frontend-mu-teal.vercel.app");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.sendStatus(200);
+});
 
 // Middleware
 app.use(express.json());

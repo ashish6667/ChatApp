@@ -65,23 +65,6 @@ router.post("/signup", async (req, res) => {
 
 app.use("/api/auth", router);
 
-const API_BASE_URL = "https://chat-app-backend-lake-ten.vercel.app";
-
-fetch(`${API_BASE_URL}/api/user/signup`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    username: "test",
-    password: "1234",
-  }),
-  credentials: "include", // Include cookies in the request
-})
-  .then((response) => response.json())
-  .then((data) => console.log(data))
-  .catch((error) => console.error("Error:", error));
-
 // Start the server
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

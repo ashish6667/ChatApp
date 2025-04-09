@@ -3,16 +3,28 @@ import { Server } from "socket.io";
 
 let io;
 
+const users = {};
+
 export const getReceiverSocketId = (receiverId) => users[receiverId];
 
-const users = {};
+// ✅ Dynamic CORS in Socket.IO
+const allowedOrigins = [
+  "https://chat-app-frontend-mu-teal.vercel.app",
+  "https://chat-app-frontend-atrb0iel3-ashish6667s-projects.vercel.app",
+];
 
 export const initSocket = (app) => {
   const server = http.createServer(app);
 
   io = new Server(server, {
     cors: {
-      origin: "https://chat-app-frontend-mu-teal.vercel.app",
+      origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS (Socket.IO)"));
+        }
+      },
       methods: ["GET", "POST"],
       credentials: true,
     },

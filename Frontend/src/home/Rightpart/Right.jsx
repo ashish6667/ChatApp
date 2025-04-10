@@ -1,16 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Chatuser from "./Chatuser";
 import Messages from "./Messages";
 import Typesend from "./Typesend";
 import useConversation from "../../zustand/useConversation.js";
 import { useAuth } from "../../context/AuthProvider.jsx";
 
-
 function Right() {
-  const { selectedConversation, setSelectedConversation } = useConversation();
-  useEffect(() => {
-    return setSelectedConversation(null);
-  }, [setSelectedConversation]);
+  const { selectedConversation } = useConversation();
+
   return (
     <div className="w-full bg-slate-900 text-gray-300">
       <div className="h-screen flex flex-col">
@@ -39,13 +36,13 @@ const NoChatSelected = () => {
     <div className="relative">
       <div className="flex h-screen items-center justify-center">
         <h1 className="text-center">
-          Welcome
+          Welcome{" "}
           <span className="font-semibold text-xl">
-            {authUser.user.fullname}
+            {authUser?.user?.fullname || "User"}
           </span>
           <br />
-          No chat selected, please start conversation by selecting anyone to
-          your contacts
+          No chat selected, please start conversation by selecting anyone from
+          your contacts.
         </h1>
       </div>
     </div>

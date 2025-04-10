@@ -16,6 +16,8 @@ const app = express();
 const allowedOrigins = [
   "https://chat-app-frontend-mu-teal.vercel.app",
   "https://chat-app-frontend-atrb0iel3-ashish6667s-projects.vercel.app",
+  "http://localhost:3000",
+  "http://localhost:3001",
 ];
 
 app.use(

@@ -6,7 +6,8 @@ const router = express.Router();
 // ✅ Add /allusers endpoint
 router.get("/allusers", async (req, res) => {
   try {
-    const users = await User.find({}, "_id username"); // Retrieve users without password
+    // Retrieve users without password
+    const users = await User.find({}, "_id fullname email"); // Adjusted to use fullname and email
     res.status(200).json(users);
   } catch (error) {
     console.error("Error fetching users:", error);

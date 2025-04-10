@@ -16,12 +16,12 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      const socket = io("https://<your-render-backend-url>", {
+      const socket = io("https://chatapp-3-11it.onrender.com", {
         query: {
           userId: authUser.user._id,
         },
-        transports: ["websocket"],
-        withCredentials: true,
+        transports: ["websocket"], // 🔥 Important for Render
+        withCredentials: true,     // 🔐 Ensures secure cookies support
       });
 
       setSocket(socket);

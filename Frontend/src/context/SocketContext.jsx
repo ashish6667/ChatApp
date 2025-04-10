@@ -1,9 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
 import io from "socket.io-client";
+
 const socketContext = createContext();
 
-// it is a hook.
+// Custom hook to access socket context
 export const useSocketContext = () => {
   return useContext(socketContext);
 };
@@ -15,15 +16,20 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (authUser) {
-      const socket = io("https://chat-app-backend-lake-ten.vercel.app", {
+      const socket = io("https://<your-render-backend-url>", {
         query: {
           userId: authUser.user._id,
         },
+        transports: ["websocket"],
+        withCredentials: true,
       });
+
       setSocket(socket);
+
       socket.on("getOnlineUsers", (users) => {
         setOnlineUsers(users);
       });
+
       return () => socket.close();
     } else {
       if (socket) {

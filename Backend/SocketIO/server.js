@@ -29,7 +29,7 @@ export const initSocket = (app) => {
       methods: ["GET", "POST"],
       credentials: true,
     },
-    transports: ["websocket"], // 🔥 Force WebSocket to avoid polling issues
+    transports: ["websocket"], // Force WebSocket to avoid polling issues
   });
 
   io.on("connection", (socket) => {

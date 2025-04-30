@@ -1,13 +1,17 @@
 import express from "express";
-import User from "../models/user.model.js"; // Adjust the path if necessary
+import User from "./models/user.model.js";  // Correct path here
+import secureRoute from "./middleware/secureRoute.js"; // ✅ This seems fine
 
 const router = express.Router();
 
-// ✅ Add /allusers endpoint
-router.get("/allusers", async (req, res) => {
+// ✅ Authenticated route
+router.get("/allusers", secureRoute, async (req, res) => {
   try {
-    // Retrieve users without password
-    const users = await User.find({}, "_id fullname email"); // Adjusted to use fullname and email
+    const loggedInUserId = req.user._id;
+
+    // Exclude current user and password field
+    const users = await User.find({ _id: { $ne: loggedInUserId } }).select("-password");
+
     res.status(200).json(users);
   } catch (error) {
     console.error("Error fetching users:", error);
